@@ -72,7 +72,15 @@ class AdapterRecycler(
                 title.text = data.someText
                 descriptionTextView.text = data.someDescription
                 earthImageView.load(R.drawable.bg_earth)
+                removeItemImageView.setOnClickListener {
+                    onListItemClickListener.onRemoveBtnClick(layoutPosition)
+
+                }
+                addItemImageView.setOnClickListener {
+                    onListItemClickListener.onAddBtnClick(layoutPosition,data)
+                }
             }
+
 
         }
 
