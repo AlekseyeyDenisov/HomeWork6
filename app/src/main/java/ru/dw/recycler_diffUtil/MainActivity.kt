@@ -1,8 +1,9 @@
-package ru.dw.to_dolist
+package ru.dw.recycler_diffUtil
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import ru.dw.to_dolist.ui.main.MainFragment
+import ru.dw.recycler_diffUtil.presentation.RecyclerFragment
+import ru.dw.to_dolist.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, RecyclerFragment.newInstance())
                 .commitNow()
         }
     }
