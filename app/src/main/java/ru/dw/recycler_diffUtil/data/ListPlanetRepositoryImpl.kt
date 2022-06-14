@@ -1,5 +1,6 @@
 package ru.dw.recycler_diffUtil.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.dw.recycler_diffUtil.domain.Data
@@ -18,7 +19,7 @@ object ListPlanetRepositoryImpl : RepositoryList {
         val list = mutableListOf<Data>(
             Data(0, "Header", type = TYPE_HEADER),
             Data(0, "Earth", type = TYPE_EARTH),
-            Data(0, "Mars", type = TYPE_MARS),
+            Data(0, "Mars", type = TYPE_MARS, ),
             Data(0, "Mars", type = TYPE_MARS),
             Data(0, "Earth", type = TYPE_EARTH),
             Data(0, "Mars", type = TYPE_MARS),
@@ -35,6 +36,7 @@ object ListPlanetRepositoryImpl : RepositoryList {
     }
 
     override fun deleteItem(position: Int) {
+        Log.d("@@@", "deleteItem: $position")
         listPlanet.removeAt(position)
         updateList()
     }
@@ -43,26 +45,20 @@ object ListPlanetRepositoryImpl : RepositoryList {
         return listLD
     }
 
-    override fun moveItemUp(position: Int) {
-        if (position != 1){
-            listPlanet.removeAt(position).apply {
-                listPlanet.add(position - 1, this)
+    override fun moveItem(fromPosition: Int,toPosition:Int) {
+        if (toPosition > 0 && listPlanet.size != toPosition){
+            listPlanet.removeAt(fromPosition).apply {
+                listPlanet.add(toPosition, this)
             }
             updateList()
         }
 
     }
 
-    override fun moveItemDown(position: Int) {
-        if (listPlanet.size-1 != position) {
-            listPlanet.removeAt(position).apply {
-                listPlanet.add(position + 1, this)
-            }
-            updateList()
-        }
-    }
+
 
     private fun updateList() {
+        Log.d("@@@", "getList: ${listPlanet.size}")
         listLD.value = listPlanet.sortedBy { o1 -> o1.id }
     }
 }

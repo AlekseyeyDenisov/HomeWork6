@@ -1,5 +1,6 @@
 package ru.dw.recycler_diffUtil.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import ru.dw.recycler_diffUtil.data.ListPlanetRepositoryImpl
 import ru.dw.recycler_diffUtil.domain.*
@@ -10,8 +11,9 @@ class RecyclerViewModel : ViewModel() {
     private val getListUseCase = GetListUseCase(repository)
     private val deleteItemUseCase = DeleteItemUseCase(repository)
     private val addItemUseCase = AddItemUseCase(repository)
-    private val moveItemDownUseCase = MoveItemDownUseCase(repository)
-    private val moveItemUpUseCase = MoveItemUpUseCase(repository)
+    private val moveItemUseCase = MoveItemUseCase(repository)
+
+
 
     val list = getListUseCase.getList()
 
@@ -20,14 +22,13 @@ class RecyclerViewModel : ViewModel() {
     }
 
     fun deleteItem(position:Int){
+        Log.d("@@@", "deleteItem: $position")
         deleteItemUseCase.deleteItem(position)
     }
-    fun moveItemDown(position: Int){
-        moveItemDownUseCase.moveItemDown(position)
+    fun moveItem(fromPosition: Int,toPosition:Int){
+        moveItemUseCase.moveItem(fromPosition,toPosition)
     }
-    fun moveItemUp(position: Int){
-        moveItemUpUseCase.moveItemUp(position)
-    }
+
 
 
 

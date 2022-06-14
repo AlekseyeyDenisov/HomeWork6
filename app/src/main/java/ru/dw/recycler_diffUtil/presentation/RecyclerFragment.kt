@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import ru.dw.recycler_diffUtil.domain.Data
 import ru.dw.recycler_diffUtil.presentation.recycler.AdapterRecycler
+import ru.dw.recycler_diffUtil.presentation.recycler.helper_callback.ItemTouchHelperCallback
 import ru.dw.recycler_diffUtil.presentation.recycler.OnListItemClickListener
 import ru.dw.to_dolist.databinding.FragmentMainBinding
 
@@ -43,12 +45,16 @@ class RecyclerFragment : Fragment(), OnListItemClickListener {
         initRecycler(binding.recyclerView)
 
 
+
     }
 
     private fun initRecycler(recycler: RecyclerView) {
         with(recycler) {
             adapter = adapterRecycler
         }
+        ItemTouchHelper(ItemTouchHelperCallback(adapterRecycler)).attachToRecyclerView(recycler)
+
+
 
     }
 
@@ -66,17 +72,14 @@ class RecyclerFragment : Fragment(), OnListItemClickListener {
 
     }
 
-    override fun onRemoveBtnClick(position: Int) {
+    override fun onRemoveItem(position: Int) {
         viewModel.deleteItem(position)
 
     }
 
-    override fun moveItemUp(position: Int) {
-        viewModel.moveItemUp(position)
-    }
 
-    override fun moveItemDown(position: Int) {
-        viewModel.moveItemDown(position)
+    override fun moveItem(fromPosition: Int,toPosition:Int) {
+        viewModel.moveItem(fromPosition,toPosition)
     }
 
 

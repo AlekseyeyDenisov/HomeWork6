@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import coil.load
 import ru.dw.recycler_diffUtil.domain.Data
+import ru.dw.recycler_diffUtil.presentation.recycler.helper_callback.ItemTouchHelperAdapter
 import ru.dw.to_dolist.R
 import ru.dw.to_dolist.databinding.RecyclerItemEarthBinding
 import ru.dw.to_dolist.databinding.RecyclerItemHeaderBinding
@@ -17,13 +18,16 @@ import ru.dw.to_dolist.databinding.RecyclerItemMarsBinding
 
 class AdapterRecycler(
     private var onListItemClickListener: OnListItemClickListener
-) :
-    ListAdapter<Data, AdapterRecycler.ViewHolderShopItem>(RecyclerDiffUtilCallBack()) {
+) : ListAdapter<Data, AdapterRecycler.ViewHolderShopItem>(RecyclerDiffUtilCallBack()),
+    ItemTouchHelperAdapter {
+
     companion object {
         const val TYPE_EARTH = 1
         const val TYPE_MARS = 2
         const val TYPE_HEADER = 3
     }
+
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderShopItem {
@@ -72,7 +76,7 @@ class AdapterRecycler(
                 descriptionTextView.text = data.someDescription
                 earthImageView.load(R.drawable.bg_earth)
                 removeItemImageView.setOnClickListener {
-                    onListItemClickListener.onRemoveBtnClick(layoutPosition)
+                    onListItemClickListener.onRemoveItem(layoutPosition)
 
                 }
                 addItemImageView.setOnClickListener {
@@ -86,23 +90,23 @@ class AdapterRecycler(
         fun bindMars(data: Data) {
             RecyclerItemMarsBinding.bind(itemView).apply {
                 title.text = data.someText
-                marsDescriptionTextView.text = data.someDescription
                 marsImageView.load(R.drawable.bg_mars)
+                marsDescriptionTextView.text = itemView.context.getString(R.string.textDescr)
                 removeItemImageView.setOnClickListener {
-                    onListItemClickListener.onRemoveBtnClick(layoutPosition)
+                    onListItemClickListener.onRemoveItem(layoutPosition)
 
                 }
                 addItemImageView.setOnClickListener {
                     onListItemClickListener.onAddBtnClick(layoutPosition, data)
                 }
                 moveItemUp.setOnClickListener {
-                    onListItemClickListener.moveItemUp(layoutPosition)
+                    onListItemClickListener.moveItem(layoutPosition,layoutPosition-1)
 
                 }
                 moveItemDown.setOnClickListener {
-                    onListItemClickListener.moveItemDown(layoutPosition)
+                    onListItemClickListener.moveItem(layoutPosition,layoutPosition+1)
                 }
-                itemView.setOnClickListener {
+                marsImageView.setOnClickListener {
                     val visibility = marsDescriptionTextView.visibility
                     marsDescriptionTextView.visibility =
                         if (visibility == View.VISIBLE) View.GONE else View.VISIBLE
@@ -114,6 +118,13 @@ class AdapterRecycler(
 
     }
 
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+        onListItemClickListener.moveItem(fromPosition,toPosition)
+    }
+
+    override fun onItemDismiss(position: Int) {
+        onListItemClickListener.onRemoveItem(position)
+    }
 
 }
 
