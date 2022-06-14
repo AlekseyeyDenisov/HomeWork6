@@ -9,9 +9,5 @@ data class Data(
     val someDescription: String? = "Description",
     val type: Int = TYPE_MARS,
     val weight: Int = 0
-){
-    companion object {
-        const val UNDEFINED_ID = -1
-    }
-}
+)
 

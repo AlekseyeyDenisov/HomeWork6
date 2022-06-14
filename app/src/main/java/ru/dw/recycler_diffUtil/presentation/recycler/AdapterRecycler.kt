@@ -2,6 +2,7 @@ package ru.dw.recycler_diffUtil.presentation.recycler
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,8 +24,6 @@ class AdapterRecycler(
         const val TYPE_MARS = 2
         const val TYPE_HEADER = 3
     }
-
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderShopItem {
@@ -51,9 +50,9 @@ class AdapterRecycler(
     override fun onBindViewHolder(holder: ViewHolderShopItem, position: Int) {
         val data = getItem(position)
         when (data.type) {
-            TYPE_EARTH ->  holder.bindEarth(data)
+            TYPE_EARTH -> holder.bindEarth(data)
 
-            TYPE_MARS ->  holder.bindMars(data)
+            TYPE_MARS -> holder.bindMars(data)
 
             TYPE_HEADER -> {}
         }
@@ -77,7 +76,7 @@ class AdapterRecycler(
 
                 }
                 addItemImageView.setOnClickListener {
-                    onListItemClickListener.onAddBtnClick(layoutPosition,data)
+                    onListItemClickListener.onAddBtnClick(layoutPosition, data)
                 }
             }
 
@@ -94,7 +93,7 @@ class AdapterRecycler(
 
                 }
                 addItemImageView.setOnClickListener {
-                    onListItemClickListener.onAddBtnClick(layoutPosition,data)
+                    onListItemClickListener.onAddBtnClick(layoutPosition, data)
                 }
                 moveItemUp.setOnClickListener {
                     onListItemClickListener.moveItemUp(layoutPosition)
@@ -103,6 +102,12 @@ class AdapterRecycler(
                 moveItemDown.setOnClickListener {
                     onListItemClickListener.moveItemDown(layoutPosition)
                 }
+                itemView.setOnClickListener {
+                    val visibility = marsDescriptionTextView.visibility
+                    marsDescriptionTextView.visibility =
+                        if (visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                }
+
             }
 
         }
