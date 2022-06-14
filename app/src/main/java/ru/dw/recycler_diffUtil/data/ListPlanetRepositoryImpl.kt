@@ -39,10 +39,27 @@ object ListPlanetRepositoryImpl : RepositoryList {
         updateList()
     }
 
-
-
     override fun getList(): LiveData<List<Data>> {
         return listLD
+    }
+
+    override fun moveItemUp(position: Int) {
+        if (position != 1){
+            listPlanet.removeAt(position).apply {
+                listPlanet.add(position - 1, this)
+            }
+            updateList()
+        }
+
+    }
+
+    override fun moveItemDown(position: Int) {
+        if (listPlanet.size-1 != position) {
+            listPlanet.removeAt(position).apply {
+                listPlanet.add(position + 1, this)
+            }
+            updateList()
+        }
     }
 
     private fun updateList() {

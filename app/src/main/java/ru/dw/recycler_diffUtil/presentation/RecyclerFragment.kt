@@ -71,8 +71,13 @@ class RecyclerFragment : Fragment(), OnListItemClickListener {
 
     }
 
+    override fun moveItemUp(position: Int) {
+        viewModel.moveItemUp(position)
+    }
 
-
+    override fun moveItemDown(position: Int) {
+        viewModel.moveItemDown(position)
+    }
 
 
 }

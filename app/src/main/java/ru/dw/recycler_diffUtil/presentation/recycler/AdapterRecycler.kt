@@ -96,6 +96,13 @@ class AdapterRecycler(
                 addItemImageView.setOnClickListener {
                     onListItemClickListener.onAddBtnClick(layoutPosition,data)
                 }
+                moveItemUp.setOnClickListener {
+                    onListItemClickListener.moveItemUp(layoutPosition)
+
+                }
+                moveItemDown.setOnClickListener {
+                    onListItemClickListener.moveItemDown(layoutPosition)
+                }
             }
 
         }
