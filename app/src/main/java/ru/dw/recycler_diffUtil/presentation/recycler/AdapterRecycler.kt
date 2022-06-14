@@ -14,7 +14,9 @@ import ru.dw.to_dolist.databinding.RecyclerItemHeaderBinding
 import ru.dw.to_dolist.databinding.RecyclerItemMarsBinding
 
 
-class AdapterRecycler :
+class AdapterRecycler(
+    private var onListItemClickListener: OnListItemClickListener
+) :
     ListAdapter<Data, AdapterRecycler.ViewHolderShopItem>(RecyclerDiffUtilCallBack()) {
     companion object {
         const val TYPE_EARTH = 1
@@ -22,7 +24,7 @@ class AdapterRecycler :
         const val TYPE_HEADER = 3
     }
 
-    private var onListItemClickListener: OnListItemClickListener? = null
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderShopItem {
@@ -55,12 +57,6 @@ class AdapterRecycler :
 
             TYPE_HEADER -> {}
         }
-
-        holder.itemView.setOnClickListener {
-            onListItemClickListener?.onItemClick(data)
-
-        }
-
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -85,6 +81,13 @@ class AdapterRecycler :
                 title.text = data.someText
                 marsDescriptionTextView.text = data.someDescription
                 marsImageView.load(R.drawable.bg_mars)
+                removeItemImageView.setOnClickListener {
+                    onListItemClickListener.onRemoveBtnClick(layoutPosition)
+
+                }
+                addItemImageView.setOnClickListener {
+                    onListItemClickListener.onAddBtnClick(layoutPosition,data)
+                }
             }
 
         }
