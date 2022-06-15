@@ -1,21 +1,23 @@
 package ru.dw.recycler_diffUtil.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import ru.dw.recycler_diffUtil.domain.Entities
 import ru.dw.recycler_diffUtil.presentation.recycler.AdapterRecycler
-import ru.dw.recycler_diffUtil.presentation.recycler.helper_callback.ItemTouchHelperCallback
 import ru.dw.recycler_diffUtil.presentation.recycler.OnListItemClickListener
+import ru.dw.recycler_diffUtil.presentation.recycler.helper_callback.ItemTouchHelperCallback
 import ru.dw.to_dolist.databinding.FragmentMainBinding
 
+
 class RecyclerFragment : Fragment(), OnListItemClickListener {
+    private var listEntities:List<Entities> = mutableListOf()
 
     companion object {
         fun newInstance() = RecyclerFragment()
@@ -40,13 +42,32 @@ class RecyclerFragment : Fragment(), OnListItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.list.observe(viewLifecycleOwner){
-            adapterRecycler.submitList(it)
-        }
         initRecycler(binding.recyclerView)
+        submitListRecycler()
+        search()
+    }
 
+    private fun submitListRecycler() {
+        viewModel.list.observe(viewLifecycleOwner) {
+            adapterRecycler.submitList(it)
+            listEntities = it
+        }
+    }
 
+    private fun search() {
+        binding.searchInput.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String): Boolean {
+                val filterData = listEntities.filter {
+                    it.someText.lowercase().contains(newText.lowercase())
+                }
+                adapterRecycler.submitList(filterData)
+                return false
+            }
+        })
     }
 
     private fun initRecycler(recycler: RecyclerView) {
@@ -54,7 +75,6 @@ class RecyclerFragment : Fragment(), OnListItemClickListener {
             adapter = adapterRecycler
         }
         ItemTouchHelper(ItemTouchHelperCallback(adapterRecycler)).attachToRecyclerView(recycler)
-
 
 
     }
@@ -68,8 +88,8 @@ class RecyclerFragment : Fragment(), OnListItemClickListener {
 
     }
 
-    override fun onAddBtnClick(position:Int, entities: Entities) {
-        viewModel.addItem(position,entities)
+    override fun onAddBtnClick(position: Int, entities: Entities) {
+        viewModel.addItem(position, entities)
 
     }
 
@@ -79,8 +99,8 @@ class RecyclerFragment : Fragment(), OnListItemClickListener {
     }
 
 
-    override fun moveItem(fromPosition: Int,toPosition:Int) {
-        viewModel.moveItem(fromPosition,toPosition)
+    override fun moveItem(fromPosition: Int, toPosition: Int) {
+        viewModel.moveItem(fromPosition, toPosition)
     }
 
     override fun weightItem(position: Int) {

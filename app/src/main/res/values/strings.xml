@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">m_1919_1872_1</string>
+    <string name="app_name">Recycler DiffUtil</string>
 
     <string name="photo_of_the_day_stub" translatable="false">Photo of the day</string>
     <string name="search_wiki" translatable="false">Найти в Википедии</string>
