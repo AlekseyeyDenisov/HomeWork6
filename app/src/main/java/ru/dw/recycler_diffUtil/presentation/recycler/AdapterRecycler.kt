@@ -1,7 +1,6 @@
 package ru.dw.recycler_diffUtil.presentation.recycler
 
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -96,6 +95,7 @@ class AdapterRecycler(
                 title.text = entities.someText
                 marsImageView.load(R.drawable.bg_mars)
                 marsDescriptionTextView.text = itemView.context.getString(R.string.textDescr)
+
                 removeItemImageView.setOnClickListener {
                     onListItemClickListener.onRemoveItem(layoutPosition)
 
@@ -104,12 +104,11 @@ class AdapterRecycler(
                     onListItemClickListener.onAddBtnClick(layoutPosition, entities)
                 }
                 moveItemUp.setOnClickListener {
-                    Log.d("@@@", "bindMars moveItemUp: $adapterPosition")
                     onListItemClickListener.moveItem(adapterPosition,adapterPosition-1)
 
                 }
                 moveItemDown.setOnClickListener {
-                    Log.d("@@@", "bindMars moveItemDown: $adapterPosition")
+
                     onListItemClickListener.moveItem(adapterPosition,adapterPosition+1)
                 }
                 marsImageView.setOnClickListener {

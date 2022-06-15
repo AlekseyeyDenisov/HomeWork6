@@ -39,7 +39,6 @@ object ListPlanetRepositoryImpl : RepositoryList {
     }
 
     override fun deleteItem(position: Int) {
-        Log.d("@@@", "deleteItem: $position")
         listPlanet.removeAt(position)
         updateList()
     }
@@ -51,7 +50,7 @@ object ListPlanetRepositoryImpl : RepositoryList {
     override fun moveItem(fromPosition: Int,toPosition:Int) {
         if (toPosition > 0 && listPlanet.size != toPosition){
 //            listPlanet.removeAt(fromPosition).apply {
-//                listPlanet.add(toPosition, this)
+//                listPlanet.add(fromPosition, this)
 //            }
             if (fromPosition < toPosition){
                 listPlanet[fromPosition].weight = listPlanet[fromPosition].weight - 100
@@ -73,6 +72,8 @@ object ListPlanetRepositoryImpl : RepositoryList {
 
     private fun updateList() {
         val newSortList = listPlanet.sortedBy{ it.weight }.reversed()
+        listPlanet = mutableListOf()
+        listPlanet.addAll(newSortList)
         listLD.value = newSortList
     }
 }

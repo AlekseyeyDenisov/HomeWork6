@@ -22,8 +22,7 @@ class RecyclerViewModel : ViewModel() {
         addItemUseCase.addItem(position,entities)
     }
 
-    fun deleteItem(position:Int){
-        Log.d("@@@", "deleteItem: $position")
+    fun deleteItem(position: Int){
         deleteItemUseCase.deleteItem(position)
     }
     fun moveItem(fromPosition: Int,toPosition:Int){
