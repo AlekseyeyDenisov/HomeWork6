@@ -14,7 +14,7 @@
         android:theme="@style/Theme.TodoList"
         tools:targetApi="31">
         <activity
-            android:name="ru.dw.recycler_diffUtil.MainActivity"
+            android:name="ru.dw.recycler_diffUtil.presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

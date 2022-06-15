@@ -24,13 +24,13 @@
         app:layout_constraintTop_toTopOf="@+id/earthImageView" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/wikiImageView"
+        android:id="@+id/weightView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_wikipedia" />
+        app:srcCompat="@drawable/ic_star" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/addItemImageView"
@@ -39,7 +39,7 @@
         android:layout_margin="10dp"
         android:background="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/wikiImageView"
+        app:layout_constraintTop_toBottomOf="@+id/weightView"
         app:srcCompat="@drawable/ic_plus_fab" />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="end"
-        app:constraint_referenced_ids="wikiImageView" />
+        app:constraint_referenced_ids="weightView" />
 
     <View
         android:layout_width="match_parent"

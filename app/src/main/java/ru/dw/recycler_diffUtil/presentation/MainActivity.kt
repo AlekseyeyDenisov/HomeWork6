@@ -1,4 +1,4 @@
-package ru.dw.recycler_diffUtil
+package ru.dw.recycler_diffUtil.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

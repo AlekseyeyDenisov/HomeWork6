@@ -1,14 +1,14 @@
 package ru.dw.recycler_diffUtil.presentation.recycler
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.dw.recycler_diffUtil.domain.Data
+import ru.dw.recycler_diffUtil.domain.Entities
 
-class RecyclerDiffUtilCallBack:DiffUtil.ItemCallback<Data>() {
-    override fun areItemsTheSame(data: Data, newData: Data): Boolean {
-        return data.id == newData.id
+class RecyclerDiffUtilCallBack:DiffUtil.ItemCallback<Entities>() {
+    override fun areItemsTheSame(entities: Entities, newEntities: Entities): Boolean {
+        return entities.id == newEntities.id
     }
 
-    override fun areContentsTheSame(oldData: Data, newData: Data): Boolean {
-        return oldData == newData
+    override fun areContentsTheSame(oldEntities: Entities, newEntities: Entities): Boolean {
+        return oldEntities == newEntities
     }
 }

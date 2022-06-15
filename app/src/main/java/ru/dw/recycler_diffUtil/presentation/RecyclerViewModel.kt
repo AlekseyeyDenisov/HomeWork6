@@ -12,13 +12,14 @@ class RecyclerViewModel : ViewModel() {
     private val deleteItemUseCase = DeleteItemUseCase(repository)
     private val addItemUseCase = AddItemUseCase(repository)
     private val moveItemUseCase = MoveItemUseCase(repository)
+    private val weightUseCase = WeightUseCase(repository)
 
 
 
     val list = getListUseCase.getList()
 
-    fun addItem(position:Int,data: Data){
-        addItemUseCase.addItem(position,data)
+    fun addItem(position:Int, entities: Entities){
+        addItemUseCase.addItem(position,entities)
     }
 
     fun deleteItem(position:Int){
@@ -27,6 +28,9 @@ class RecyclerViewModel : ViewModel() {
     }
     fun moveItem(fromPosition: Int,toPosition:Int){
         moveItemUseCase.moveItem(fromPosition,toPosition)
+    }
+    fun weightUseCase(position:Int){
+        weightUseCase.weightItem(position)
     }
 
 

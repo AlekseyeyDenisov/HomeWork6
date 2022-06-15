@@ -1,6 +1,7 @@
 package ru.dw.recycler_diffUtil.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import ru.dw.recycler_diffUtil.domain.Data
+import ru.dw.recycler_diffUtil.domain.Entities
 import ru.dw.recycler_diffUtil.presentation.recycler.AdapterRecycler
 import ru.dw.recycler_diffUtil.presentation.recycler.helper_callback.ItemTouchHelperCallback
 import ru.dw.recycler_diffUtil.presentation.recycler.OnListItemClickListener
@@ -63,12 +64,12 @@ class RecyclerFragment : Fragment(), OnListItemClickListener {
         _binding = null
     }
 
-    override fun onItemClick(data: Data) {
+    override fun onItemClick(entities: Entities) {
 
     }
 
-    override fun onAddBtnClick(position:Int,data: Data) {
-        viewModel.addItem(position,data)
+    override fun onAddBtnClick(position:Int, entities: Entities) {
+        viewModel.addItem(position,entities)
 
     }
 
@@ -80,6 +81,10 @@ class RecyclerFragment : Fragment(), OnListItemClickListener {
 
     override fun moveItem(fromPosition: Int,toPosition:Int) {
         viewModel.moveItem(fromPosition,toPosition)
+    }
+
+    override fun weightItem(position: Int) {
+        viewModel.weightUseCase(position)
     }
 
 

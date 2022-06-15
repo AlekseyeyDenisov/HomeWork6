@@ -1,6 +1,7 @@
 package ru.dw.recycler_diffUtil.presentation.recycler
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import coil.load
-import ru.dw.recycler_diffUtil.domain.Data
+import ru.dw.recycler_diffUtil.domain.Entities
 import ru.dw.recycler_diffUtil.presentation.recycler.helper_callback.ItemTouchHelperAdapter
 import ru.dw.to_dolist.R
 import ru.dw.to_dolist.databinding.RecyclerItemEarthBinding
@@ -18,7 +19,7 @@ import ru.dw.to_dolist.databinding.RecyclerItemMarsBinding
 
 class AdapterRecycler(
     private var onListItemClickListener: OnListItemClickListener
-) : ListAdapter<Data, AdapterRecycler.ViewHolderShopItem>(RecyclerDiffUtilCallBack()),
+) : ListAdapter<Entities, AdapterRecycler.ViewHolderShopItem>(RecyclerDiffUtilCallBack()),
     ItemTouchHelperAdapter {
 
     companion object {
@@ -70,26 +71,29 @@ class AdapterRecycler(
     inner class ViewHolderShopItem(viewBinding: ViewBinding) :
         RecyclerView.ViewHolder(viewBinding.root) {
 
-        fun bindEarth(data: Data) {
+        fun bindEarth(entities: Entities) {
             RecyclerItemEarthBinding.bind(itemView).apply {
-                title.text = data.someText
-                descriptionTextView.text = data.someDescription
+                title.text = entities.someText
+                descriptionTextView.text = entities.someDescription
                 earthImageView.load(R.drawable.bg_earth)
                 removeItemImageView.setOnClickListener {
                     onListItemClickListener.onRemoveItem(layoutPosition)
 
                 }
                 addItemImageView.setOnClickListener {
-                    onListItemClickListener.onAddBtnClick(layoutPosition, data)
+                    onListItemClickListener.onAddBtnClick(layoutPosition, entities)
+                }
+                weightView.setOnClickListener {
+                    onListItemClickListener.weightItem(layoutPosition)
                 }
             }
 
 
         }
 
-        fun bindMars(data: Data) {
+        fun bindMars(entities: Entities) {
             RecyclerItemMarsBinding.bind(itemView).apply {
-                title.text = data.someText
+                title.text = entities.someText
                 marsImageView.load(R.drawable.bg_mars)
                 marsDescriptionTextView.text = itemView.context.getString(R.string.textDescr)
                 removeItemImageView.setOnClickListener {
@@ -97,19 +101,24 @@ class AdapterRecycler(
 
                 }
                 addItemImageView.setOnClickListener {
-                    onListItemClickListener.onAddBtnClick(layoutPosition, data)
+                    onListItemClickListener.onAddBtnClick(layoutPosition, entities)
                 }
                 moveItemUp.setOnClickListener {
-                    onListItemClickListener.moveItem(layoutPosition,layoutPosition-1)
+                    Log.d("@@@", "bindMars moveItemUp: $adapterPosition")
+                    onListItemClickListener.moveItem(adapterPosition,adapterPosition-1)
 
                 }
                 moveItemDown.setOnClickListener {
-                    onListItemClickListener.moveItem(layoutPosition,layoutPosition+1)
+                    Log.d("@@@", "bindMars moveItemDown: $adapterPosition")
+                    onListItemClickListener.moveItem(adapterPosition,adapterPosition+1)
                 }
                 marsImageView.setOnClickListener {
                     val visibility = marsDescriptionTextView.visibility
                     marsDescriptionTextView.visibility =
                         if (visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                }
+                weightView.setOnClickListener {
+                    onListItemClickListener.weightItem(layoutPosition)
                 }
 
             }
@@ -125,6 +134,8 @@ class AdapterRecycler(
     override fun onItemDismiss(position: Int) {
         onListItemClickListener.onRemoveItem(position)
     }
+
+
 
 }
 
